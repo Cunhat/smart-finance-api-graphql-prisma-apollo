@@ -14,6 +14,17 @@ model Account {
   id String @id @default(uuid()) 
   name String
   type String
-
   @@map("account")
+}
+
+model Category {
+  id String @id @default(uuid()) 
+  name String
+  @@map("category")
+}
+
+model SubCategory {
+  id String @id @default(uuid()) 
+  name String
+  @@map("subcategory")
 }
