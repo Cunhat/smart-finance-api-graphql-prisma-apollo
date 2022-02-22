@@ -13,7 +13,7 @@ const resolvers = {
     allAccounts: () => {
       return prismaClient.account.findMany();
     },
-    getAccountById: (parent, args: InputGetAccountById) => {
+    getAccountById: (parent: any, args: InputGetAccountById) => {
       return prismaClient.account.findUnique({
         where: {
           id: args.input.id,
@@ -23,9 +23,12 @@ const resolvers = {
     allCategories: () => {
       return prismaClient.category.findMany();
     },
+    getAllSubCategories: () => {
+      return prismaClient.subCategory.findMany();
+    },
   },
   Mutation: {
-    createAccount: (parent, args) => {
+    createAccount: (parent: any, args) => {
       return prismaClient.account.create({
         data: {
           name: args.input.name,
@@ -33,8 +36,15 @@ const resolvers = {
         },
       });
     },
-    createCategory: (parent, args) => {
+    createCategory: (parent: any, args) => {
       return prismaClient.category.create({
+        data: {
+          name: args.input.name,
+        },
+      });
+    },
+    createSubCategory: (parent: any, args) => {
+      return prismaClient.subCategory.create({
         data: {
           name: args.input.name,
         },

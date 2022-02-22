@@ -12,6 +12,11 @@ const typeDefs = gql`
     name: String
   }
 
+  type SubCategory {
+    id: String
+    name: String
+  }
+
   input CreateAccountInput {
     name: String!
     type: String!
@@ -25,15 +30,21 @@ const typeDefs = gql`
     name: String!
   }
 
+  input CreateSubCategory {
+    name: String!
+  }
+
   type Query {
     allAccounts: [Account!]!
     getAccountById(input: GetAccountById!): Account!
     allCategories: [Category!]!
+    getAllSubCategories: [SubCategory!]!
   }
 
   type Mutation {
     createAccount(input: CreateAccountInput!): Account
     createCategory(input: CreateCategory!): Category
+    createSubCategory(input: CreateSubCategory!): SubCategory
   }
 `;
 
