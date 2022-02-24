@@ -10,11 +10,13 @@ const typeDefs = gql`
   type Category {
     id: String
     name: String
+    subCategories: [SubCategory]
   }
 
   type SubCategory {
     id: String
     name: String
+    id_category: String
   }
 
   input CreateAccountInput {
@@ -32,6 +34,7 @@ const typeDefs = gql`
 
   input CreateSubCategory {
     name: String!
+    id_category: String!
   }
 
   type Query {

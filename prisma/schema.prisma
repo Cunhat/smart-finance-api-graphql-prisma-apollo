@@ -20,11 +20,16 @@ model Account {
 model Category {
   id String @id @default(uuid()) 
   name String
+  subCategories SubCategory[] 
   @@map("category")
 }
 
 model SubCategory {
   id String @id @default(uuid()) 
   name String
+  id_category String
+  category   Category @relation(fields: [id_category], references: [id])
+  
   @@map("subcategory")
 }
+

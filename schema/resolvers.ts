@@ -21,7 +21,9 @@ const resolvers = {
       });
     },
     allCategories: () => {
-      return prismaClient.category.findMany();
+      return prismaClient.category.findMany({
+        include: { subCategories: true },
+      });
     },
     getAllSubCategories: () => {
       return prismaClient.subCategory.findMany();
@@ -47,6 +49,7 @@ const resolvers = {
       return prismaClient.subCategory.create({
         data: {
           name: args.input.name,
+          id_category: args.input.id_category,
         },
       });
     },
