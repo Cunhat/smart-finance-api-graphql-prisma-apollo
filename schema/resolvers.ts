@@ -53,6 +53,17 @@ const resolvers = {
         },
       });
     },
+    createTransaction: (parent: any, args) => {
+      return prismaClient.transaction.create({
+        data: {
+          description: args.input.description,
+          date: new Date(args.input.date),
+          value: args.input.value,
+          id_category: args.input.id_category,
+          id_account: args.input.id_account,
+        },
+      });
+    },
   },
 };
 

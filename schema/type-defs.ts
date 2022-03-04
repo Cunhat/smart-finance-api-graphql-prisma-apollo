@@ -19,6 +19,15 @@ const typeDefs = gql`
     id_category: String
   }
 
+  type Transaction {
+    id: String
+    description: String
+    date: String
+    value: Float
+    id_category: String
+    id_account: String
+  }
+
   input CreateAccountInput {
     name: String!
     type: String!
@@ -37,6 +46,14 @@ const typeDefs = gql`
     id_category: String!
   }
 
+  input CreateTransaction {
+    description: String!
+    date: String!
+    value: Float!
+    id_category: String!
+    id_account: String!
+  }
+
   type Query {
     allAccounts: [Account!]!
     getAccountById(input: GetAccountById!): Account!
@@ -48,6 +65,7 @@ const typeDefs = gql`
     createAccount(input: CreateAccountInput!): Account
     createCategory(input: CreateCategory!): Category
     createSubCategory(input: CreateSubCategory!): SubCategory
+    createTransaction(input: CreateTransaction!): Transaction
   }
 `;
 
