@@ -15,6 +15,8 @@ model Account {
   name String
   type String
   transactions Transaction[]
+  id_user String
+  user  User @relation(fields: [id_user], references: [id])
   @@map("account")
 }
 
@@ -22,7 +24,9 @@ model Category {
   id String @id @default(uuid()) 
   name String
   subCategories SubCategory[]
-  transactions Transaction[]
+  transactions Transaction[] 
+  id_user String
+  user  User @relation(fields: [id_user], references: [id])
   @@map("category")
 }
 
@@ -31,7 +35,6 @@ model SubCategory {
   name String
   id_category String
   category   Category @relation(fields: [id_category], references: [id])
-  
   @@map("subcategory")
 }
 
@@ -44,6 +47,18 @@ model Transaction {
   category   Category @relation(fields: [id_category], references: [id])
   id_account String
   account   Account @relation(fields: [id_account], references: [id])
-
+  id_user String
+  user  User @relation(fields: [id_user], references: [id])
   @@map("transation")
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String
+  password String
+  categories Category[]
+  accounts Account[]
+  transactions Transaction[]
+  @@map("user")
 }

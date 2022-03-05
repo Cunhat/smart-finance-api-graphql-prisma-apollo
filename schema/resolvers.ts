@@ -1,4 +1,5 @@
 import { prismaClient } from "../src/database/prismaClient";
+const bcrypt = require("bcryptjs");
 
 type GetAccountById = {
   id: string;
@@ -7,6 +8,8 @@ type GetAccountById = {
 type InputGetAccountById = {
   input: GetAccountById;
 };
+
+const userId = "3ac140d7-c877-4f5f-a138-402e629a2b95";
 
 const resolvers = {
   Query: {
@@ -28,6 +31,19 @@ const resolvers = {
     getAllSubCategories: () => {
       return prismaClient.subCategory.findMany();
     },
+    getUsers: (user: any) => {
+      return prismaClient.user.findMany({
+        include: {
+          categories: {
+            include: {
+              subCategories: true,
+            },
+          },
+          accounts: true,
+          transactions: true,
+        },
+      });
+    },
   },
   Mutation: {
     createAccount: (parent: any, args) => {
@@ -35,6 +51,7 @@ const resolvers = {
         data: {
           name: args.input.name,
           type: args.input.type,
+          id_user: userId,
         },
       });
     },
@@ -42,6 +59,7 @@ const resolvers = {
       return prismaClient.category.create({
         data: {
           name: args.input.name,
+          id_user: userId,
         },
       });
     },
@@ -61,6 +79,17 @@ const resolvers = {
           value: args.input.value,
           id_category: args.input.id_category,
           id_account: args.input.id_account,
+          id_user: userId,
+        },
+      });
+    },
+    createUser: async (parent: any, args) => {
+      const passwordEncryp = await bcrypt.hash(args.input.password, 12);
+      return prismaClient.user.create({
+        data: {
+          name: args.input.name,
+          email: args.input.email,
+          password: passwordEncryp,
         },
       });
     },

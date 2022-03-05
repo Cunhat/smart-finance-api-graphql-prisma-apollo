@@ -28,6 +28,16 @@ const typeDefs = gql`
     id_account: String
   }
 
+  type User {
+    id: String
+    name: String
+    email: String
+    password: String
+    categories: [Category]
+    accounts: [Account]
+    transactions: [Transaction]
+  }
+
   input CreateAccountInput {
     name: String!
     type: String!
@@ -54,11 +64,18 @@ const typeDefs = gql`
     id_account: String!
   }
 
+  input CreateUser {
+    name: String!
+    email: String!
+    password: String!
+  }
+
   type Query {
     allAccounts: [Account!]!
     getAccountById(input: GetAccountById!): Account!
     allCategories: [Category!]!
     getAllSubCategories: [SubCategory!]!
+    getUsers: [User!]!
   }
 
   type Mutation {
@@ -66,6 +83,7 @@ const typeDefs = gql`
     createCategory(input: CreateCategory!): Category
     createSubCategory(input: CreateSubCategory!): SubCategory
     createTransaction(input: CreateTransaction!): Transaction
+    createUser(input: CreateUser!): User
   }
 `;
 
