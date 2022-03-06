@@ -31,7 +31,7 @@ const resolvers = {
     getAllSubCategories: () => {
       return prismaClient.subCategory.findMany();
     },
-    getUsers: (user: any) => {
+    getUsers: () => {
       return prismaClient.user.findMany({
         include: {
           categories: {
@@ -42,6 +42,29 @@ const resolvers = {
           accounts: true,
           transactions: true,
         },
+      });
+    },
+    getTransaction: async () => {
+      const transactionObj = await prismaClient.transaction.findMany();
+
+      return transactionObj.map(async (transaction) => {
+        const user = await prismaClient.user.findUnique({
+          where: { id: transaction.id_user },
+        });
+        const category = await prismaClient.category.findUnique({
+          where: { id: transaction.id_category },
+          include: { subCategories: true },
+        });
+        const account = await prismaClient.account.findUnique({
+          where: { id: transaction.id_account },
+        });
+
+        return {
+          ...transaction,
+          user: user,
+          account: account,
+          category: category,
+        };
       });
     },
   },

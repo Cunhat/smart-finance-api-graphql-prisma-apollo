@@ -24,8 +24,9 @@ const typeDefs = gql`
     description: String
     date: String
     value: Float
-    id_category: String
-    id_account: String
+    category: Category
+    account: Account
+    user: User
   }
 
   type User {
@@ -76,6 +77,7 @@ const typeDefs = gql`
     allCategories: [Category!]!
     getAllSubCategories: [SubCategory!]!
     getUsers: [User!]!
+    getTransaction: [Transaction!]!
   }
 
   type Mutation {
