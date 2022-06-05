@@ -17,7 +17,7 @@ type InputCreateTag = {
   input: TagInput;
 };
 
-const userId = "f3ed064a-ce25-4346-8751-ac50bf1465cf";
+const userId = "3bba38f7-ef09-42c6-bd7e-553c2ade0861";
 
 const resolvers = {
   Query: {
@@ -59,10 +59,14 @@ const resolvers = {
         const user = await prismaClient.user.findUnique({
           where: { id: transaction.id_user },
         });
-        const category = await prismaClient.subCategory.findUnique({
+        
+        console.log(transaction)
+        const subCategory = await prismaClient.subCategory.findUnique({
           where: { id: transaction.id_subCategory },
           include: { category: true },
         });
+
+        console.log(subCategory)
         const account = await prismaClient.account.findUnique({
           where: { id: transaction.id_account },
         });
@@ -71,7 +75,7 @@ const resolvers = {
           ...transaction,
           user: user,
           account: account,
-          category: category,
+          subcategory: subCategory,
         };
       });
     },

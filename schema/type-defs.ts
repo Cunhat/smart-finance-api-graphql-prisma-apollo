@@ -17,6 +17,7 @@ const typeDefs = gql`
     id: String
     name: String
     id_category: String
+    category: Category
   }
 
   type Transaction {
@@ -67,8 +68,9 @@ const typeDefs = gql`
     description: String!
     date: String!
     value: Float!
-    id_category: String!
+    id_subCategory: String!
     id_account: String!
+    id_tag: String!
   }
 
   input CreateUser {
