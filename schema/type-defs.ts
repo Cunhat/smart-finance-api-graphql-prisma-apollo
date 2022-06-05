@@ -24,9 +24,10 @@ const typeDefs = gql`
     description: String
     date: String
     value: Float
-    category: Category
+    subcategory: SubCategory
     account: Account
     user: User
+    tag: Tag
   }
 
   type User {
@@ -37,6 +38,11 @@ const typeDefs = gql`
     categories: [Category]
     accounts: [Account]
     transactions: [Transaction]
+  }
+
+  type Tag {
+    id: String!
+    name: String!
   }
 
   input CreateAccountInput {
@@ -71,6 +77,10 @@ const typeDefs = gql`
     password: String!
   }
 
+  input CreateTag {
+    name: String!
+  }
+
   type Query {
     allAccounts: [Account!]!
     getAccountById(input: GetAccountById!): Account!
@@ -78,6 +88,7 @@ const typeDefs = gql`
     getAllSubCategories: [SubCategory!]!
     getUsers: [User!]!
     getTransaction: [Transaction!]!
+    getTags: [Tag!]!
   }
 
   type Mutation {
@@ -86,6 +97,7 @@ const typeDefs = gql`
     createSubCategory(input: CreateSubCategory!): SubCategory
     createTransaction(input: CreateTransaction!): Transaction
     createUser(input: CreateUser!): User
+    createTag(input: CreateTag!): Tag
   }
 `;
 

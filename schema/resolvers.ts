@@ -9,7 +9,15 @@ type InputGetAccountById = {
   input: GetAccountById;
 };
 
-const userId = "3ac140d7-c877-4f5f-a138-402e629a2b95";
+type TagInput= {
+  name: string;
+};
+
+type InputCreateTag = {
+  input: TagInput;
+};
+
+const userId = "f3ed064a-ce25-4346-8751-ac50bf1465cf";
 
 const resolvers = {
   Query: {
@@ -51,9 +59,9 @@ const resolvers = {
         const user = await prismaClient.user.findUnique({
           where: { id: transaction.id_user },
         });
-        const category = await prismaClient.category.findUnique({
-          where: { id: transaction.id_category },
-          include: { subCategories: true },
+        const category = await prismaClient.subCategory.findUnique({
+          where: { id: transaction.id_subCategory },
+          include: { category: true },
         });
         const account = await prismaClient.account.findUnique({
           where: { id: transaction.id_account },
@@ -67,6 +75,9 @@ const resolvers = {
         };
       });
     },
+    getTags: () => {
+      return prismaClient.tag.findMany();
+    }
   },
   Mutation: {
     createAccount: (parent: any, args) => {
@@ -100,9 +111,10 @@ const resolvers = {
           description: args.input.description,
           date: new Date(args.input.date),
           value: args.input.value,
-          id_category: args.input.id_category,
+          id_subCategory: args.input.id_subCategory,
           id_account: args.input.id_account,
           id_user: userId,
+          id_tag: args.input.id_tag,
         },
       });
     },
@@ -116,6 +128,13 @@ const resolvers = {
         },
       });
     },
+    createTag: async (parent: any, args: InputCreateTag) => {
+      return prismaClient.tag.create({
+        data: {
+          name: args.input.name,
+        },
+      });
+    }
   },
 };
 
