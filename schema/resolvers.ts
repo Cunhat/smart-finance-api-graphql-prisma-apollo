@@ -60,13 +60,11 @@ const resolvers = {
           where: { id: transaction.id_user },
         });
         
-        console.log(transaction)
         const subCategory = await prismaClient.subCategory.findUnique({
           where: { id: transaction.id_subCategory },
           include: { category: true },
         });
 
-        console.log(subCategory)
         const account = await prismaClient.account.findUnique({
           where: { id: transaction.id_account },
         });
