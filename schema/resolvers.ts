@@ -17,7 +17,7 @@ type InputCreateTag = {
   input: TagInput;
 };
 
-const userId = "3bba38f7-ef09-42c6-bd7e-553c2ade0861";
+const userId = "b957f6a8-2b53-4278-bed6-3fad0a22e9c6";
 
 const resolvers = {
   Query: {
@@ -136,6 +136,14 @@ const resolvers = {
           name: args.input.name,
         },
       });
+    },
+    deleteSubCategoryById: async (parent: any, args) => {
+      return prismaClient.subCategory.delete({
+        where: {
+          id: args.input.subCategoryId,
+        },
+      });
+      
     }
   },
 };

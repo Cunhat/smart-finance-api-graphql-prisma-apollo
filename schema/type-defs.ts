@@ -83,6 +83,10 @@ const typeDefs = gql`
     name: String!
   }
 
+  input DeleteSubCategoryById {
+    subCategoryId: String
+  }
+
   type Query {
     allAccounts: [Account!]!
     getAccountById(input: GetAccountById!): Account!
@@ -100,6 +104,7 @@ const typeDefs = gql`
     createTransaction(input: CreateTransaction!): Transaction
     createUser(input: CreateUser!): User
     createTag(input: CreateTag!): Tag
+    deleteSubCategoryById(input: DeleteSubCategoryById!): SubCategory
   }
 `;
 
